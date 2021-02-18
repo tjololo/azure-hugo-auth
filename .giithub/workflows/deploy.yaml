@@ -1,0 +1,59 @@
+name: deploy hugo
+on:
+  push:
+    branches: main
+
+jobs:
+  check:
+    name: Check for terraform changes
+    runs-on: ubuntu-latest
+    outputs:
+      terra_change: ${{ steps.check_files.outputs.terra_change }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: check for modified terraform files
+        id: check_files
+        run: |
+          echo "======== list modified files ========"
+          git diff --name-only HEAD^ HEAD
+          echo "======== check paths of modified files ========"
+          git diff --name-only HEAD^ HEAD > files.txt
+          while IFS= read -r file
+          do
+            echo $file
+            if [[ $file == terraform/* ]]; then
+              echo "This modified file is under the 'terraform' folder."
+              echo "::set-output name=terra_change::true"
+              break
+            else
+              echo "::set-output name=terra_change::false"
+            fi
+          done < files.txt
+
+  terraform:
+    name: Run terraform
+    needs: check
+    if: needs.check.outputs.terra_change == 'true'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{secrets.TF_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.TF_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.TF_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.TF_TENANT_ID}}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        run: terraform plan
