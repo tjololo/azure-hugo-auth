@@ -38,6 +38,9 @@ jobs:
     needs: check
     if: needs.check.outputs.terra_change == 'true'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
     env:
       ARM_CLIENT_ID: ${{secrets.TF_CLIENT_ID}}
       ARM_CLIENT_SECRET: ${{secrets.TF_CLIENT_SECRET}}
