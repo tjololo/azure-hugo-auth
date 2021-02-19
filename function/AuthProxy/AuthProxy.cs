@@ -16,7 +16,7 @@ namespace AuthProxy
     {
         [FunctionName("AuthProxy")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "{*path}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, Route = "{*path}")] HttpRequest req,
             ILogger log, string path)
         {
             var blobStorageURI = System.Environment.GetEnvironmentVariable("BLOB_SERVICE_ENDPOINT", EnvironmentVariableTarget.Process);
@@ -26,7 +26,7 @@ namespace AuthProxy
             {
                 client.BaseAddress = new Uri(blobStorageURI);
                 string postfix = "";
-                if (path.EndsWith("/") || path == ""){
+                if (path == null || path.EndsWith("/") || path == ""){
                     postfix = "index.html";
                 }
                 var storagePath = "/" + container + "/" + path + postfix + authKey;
