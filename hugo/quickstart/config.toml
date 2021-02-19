@@ -1,4 +1,4 @@
-baseURL = "https://hugo-test-proxy.azurewebsites.net"
+baseURL = "https://hugo-test-proxy.azurewebsites.net/docs/"
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme="hugo-geekblog"
