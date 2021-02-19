@@ -72,7 +72,7 @@ resource "azurerm_function_app" "proxy" {
   https_only                 = true
   app_settings = {
     "BLOB_SERVICE_ENDPOINT" = azurerm_storage_account.main.primary_blob_endpoint
-    "BLOB_CONTAINER" = azurerm_storage_container.content
+    "BLOB_CONTAINER" = azurerm_storage_container.content.name
     "BLOB_ACCESS_STRING" = "?${data.azurerm_storage_account_blob_container_sas.content.sas}"
   }
 }
