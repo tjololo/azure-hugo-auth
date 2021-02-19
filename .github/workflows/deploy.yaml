@@ -104,6 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGOVERSION: 0.80.0
+      HUGO_BASEURL: "https://${{secrets.PROXYNAME}}.azurewebsites.net/docs/"
     steps:
       - name: Install hugo
         run: |
