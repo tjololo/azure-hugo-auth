@@ -58,3 +58,18 @@ jobs:
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+  hugo:
+    name: Publish hugosite
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hugo/quickstart
+    steps:
+      - uses: actions/checkout@v2
+      - uses: chabad360/hugo-actions@master
+      - uses: bacongobbler/azure-blob-storage-upload@v1.1.1
+        with:
+          source_dir: 'public'
+          container_name: 'content'
+          connection_string: ${{ secrets.STORAGE_CREDENTIALS }}
+          sync: true
