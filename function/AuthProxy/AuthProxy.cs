@@ -26,7 +26,7 @@ namespace AuthProxy
             {
                 client.BaseAddress = new Uri(blobStorageURI);
                 string postfix = "";
-                if (path.EndsWith("/")){
+                if (path.EndsWith("/") || path == ""){
                     postfix = "index.html";
                 }
                 var storagePath = "/" + container + "/" + path + postfix + authKey;
