@@ -22,3 +22,8 @@ variable "google_client_id" {
 variable "google_client_secret" {
   description = "google auth secret"
 }
+
+variable "allowed_users" {
+  description = "comma separated list of allowed users"
+  default = ""
+}

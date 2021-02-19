@@ -75,6 +75,7 @@ resource "azurerm_function_app" "proxy" {
     "BLOB_CONTAINER" = azurerm_storage_container.content.name
     "BLOB_ACCESS_STRING" = data.azurerm_storage_account_blob_container_sas.content.sas
     "AzureWebJobsDisableHomepage" = true
+    "ALLOWED_USERS" = var.allowed_users
   }
   auth_settings {
     enabled = true
