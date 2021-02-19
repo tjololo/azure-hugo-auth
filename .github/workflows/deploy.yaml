@@ -52,9 +52,21 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
-        run: terraform plan -var resourcegroup=${{secrets.RESOURCEGROUP}} -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} -var proxyname=${{secrets.PROXYNAME}}
+        run: |
+          terraform plan \
+          -var resourcegroup=${{secrets.RESOURCEGROUP}} \
+          -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} \
+          -var proxyname=${{secrets.PROXYNAME}} \
+          -var google_client_id=${{secrets.GOOGLE_ID}} \
+          -var google_client_secret=${{secrets.GOOGLE_SECRET}}
       - name: Terraform apply
-        run: terraform apply -auto-approve -var resourcegroup=${{secrets.RESOURCEGROUP}} -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} -var proxyname=${{secrets.PROXYNAME}}
+        run: |
+          terraform apply -auto-approve \
+          -var resourcegroup=${{secrets.RESOURCEGROUP}} \
+          -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} \
+          -var proxyname=${{secrets.PROXYNAME}} \
+          -var google_client_id=${{secrets.GOOGLE_ID}} \
+          -var google_client_secret=${{secrets.GOOGLE_SECRET}}
   function:
     name: Publish function
     runs-on: ubuntu-latest

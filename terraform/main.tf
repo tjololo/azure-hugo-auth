@@ -75,4 +75,13 @@ resource "azurerm_function_app" "proxy" {
     "BLOB_CONTAINER" = azurerm_storage_container.content.name
     "BLOB_ACCESS_STRING" = data.azurerm_storage_account_blob_container_sas.content.sas
   }
+  auth_settings {
+    enabled = true
+    default_provider = "Google"
+    google {
+      client_id = var.google_client_id
+      client_secret = var.google_client_secret
+    }
+    unauthenticated_client_action = "RedirectToLoginPage"
+  }
 }

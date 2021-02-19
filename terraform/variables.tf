@@ -14,3 +14,11 @@ variable "storageaccountname" {
 variable "proxyname" {
     description = "Name of the auth function"
 }
+
+variable "google_client_id" {
+  description = "google auth id"
+}
+
+variable "google_client_secret" {
+  description = "google auth secret"
+}
