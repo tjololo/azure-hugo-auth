@@ -52,7 +52,7 @@ resource "azurerm_app_service_plan" "proxy" {
   name                = "${var.proxyname}-service-plan"
   location            = var.location
   resource_group_name = var.resourcegroup
-  kind                = "Linux"
+  kind                = "functionapp"
   reserved            = true
 
   sku {
