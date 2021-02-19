@@ -69,13 +69,13 @@ jobs:
           echo -e "\nDownloading Hugo version ${{env.HUGOVERSION}}."
           wget "https://github.com/gohugoio/hugo/releases/download/v$(echo "${{env.HUGOVERSION}}" | grep -o  "[0-9]\+.[0-9]\+.[0-9]\+")/hugo_${{env.HUGOVERSION}}_Linux-64bit.tar.gz"
           tar xzvf hugo_${{env.HUGOVERSION}}_Linux-64bit.tar.gz
-          mv hugo /usr/bin/hugo
+          mv hugo /tmp
           rm hugo*
       - uses: actions/checkout@v2
       - name: Build hugo site
         working-directory: ./hugo/quickstart
         run: | 
-          hugo --gc --minify --cleanDestinationDir -d "public"
+          /tmp/hugo --gc --minify --cleanDestinationDir -d "public"
       - uses: bacongobbler/azure-blob-storage-upload@v1.1.1
         with:
           source_dir: 'hugo/quickstart/public'
