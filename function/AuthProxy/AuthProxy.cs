@@ -25,8 +25,8 @@ namespace AuthProxy
             if (req.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL-NAME")) {
                 user = req.Headers["X-MS-CLIENT-PRINCIPAL-NAME"];
             }
-            string[] allowesUsers = System.Environment.GetEnvironmentVariable("ALLOWED_USERS").Trim().Split(",");
-            if (allowesUsers.Length > 0 && Array.IndexOf(allowesUsers, user) == -1)
+            string[] allowedUsers = System.Environment.GetEnvironmentVariable("ALLOWED_USERS")?.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            if (allowedUsers != null && allowedUsers.Length > 0 && Array.IndexOf(allowedUsers, user) == -1)
             {
                 return new HttpResponseMessage(HttpStatusCode.Forbidden);
             }
