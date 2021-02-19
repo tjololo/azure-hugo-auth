@@ -64,14 +64,14 @@ jobs:
     env:
       HUGOVERSION: 0.80.0
     steps:
-      - uses: actions/checkout@v2
       - name: Install hugo
         run: |
           echo -e "\nDownloading Hugo version ${{env.HUGOVERSION}}."
           wget "https://github.com/gohugoio/hugo/releases/download/v$(echo "${{env.HUGOVERSION}}" | grep -o  "[0-9]\+.[0-9]\+.[0-9]\+")/hugo_${{env.HUGOVERSION}}_Linux-64bit.tar.gz"
-          tar xzvf hugo*
+          tar xzvf hugo_${{env.HUGOVERSION}}_Linux-64bit.tar.gz
           mv hugo /usr/bin/hugo
           rm hugo*
+      - uses: actions/checkout@v2
       - name: Build hugo site
         working-directory: ./hugo/quickstart
         run: | 
