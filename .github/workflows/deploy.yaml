@@ -58,7 +58,8 @@ jobs:
           -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} \
           -var proxyname=${{secrets.PROXYNAME}} \
           -var google_client_id=${{secrets.GOOGLE_ID}} \
-          -var google_client_secret=${{secrets.GOOGLE_SECRET}}
+          -var google_client_secret=${{secrets.GOOGLE_SECRET}} \
+          -var allowed_users=${{secrets.ALLOWED_USERS}}
       - name: Terraform apply
         run: |
           terraform apply -auto-approve \
@@ -66,7 +67,8 @@ jobs:
           -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} \
           -var proxyname=${{secrets.PROXYNAME}} \
           -var google_client_id=${{secrets.GOOGLE_ID}} \
-          -var google_client_secret=${{secrets.GOOGLE_SECRET}}
+          -var google_client_secret=${{secrets.GOOGLE_SECRET}} \
+          -var allowed_users=${{secrets.ALLOWED_USERS}}
   function:
     name: Publish function
     runs-on: ubuntu-latest
