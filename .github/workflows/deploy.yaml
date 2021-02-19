@@ -23,7 +23,8 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-
+      - name: Terraform Plan
+        run: terraform plan -var resourcegroup=${{secrets.RESOURCEGROUP}} -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} -var proxyname=${{secrets.PROXYNAME}}
       - name: Terraform apply
         run: terraform apply -auto-approve -var resourcegroup=${{secrets.RESOURCEGROUP}} -var storageaccountname=${{secrets.STORAGEACCOUNTNAME}} -var proxyname=${{secrets.PROXYNAME}}
   function:
