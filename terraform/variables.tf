@@ -25,5 +25,5 @@ variable "google_client_secret" {
 
 variable "allowed_users" {
   description = "comma separated list of allowed users"
-  default = ""
+  default = "*"
 }
