@@ -24,8 +24,8 @@ jobs:
           while IFS= read -r file
           do
             echo $file
-            if [[ $file == function/* ]]; then
-              echo "This modified file is under the 'function' folder."
+            if [[ $file == function/* ]] || [[ $file == function/* ]] ; then
+              echo "This modified file is under the 'function' or terraform folder."
               echo "::set-output name=func_change::true"
               break
             else
