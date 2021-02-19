@@ -76,6 +76,8 @@ resource "azurerm_function_app" "proxy" {
     "BLOB_ACCESS_STRING" = data.azurerm_storage_account_blob_container_sas.content.sas
     "AzureWebJobsDisableHomepage" = true
     "ALLOWED_USERS" = var.allowed_users
+    "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = true
+    "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
   auth_settings {
     enabled = true
@@ -85,5 +87,12 @@ resource "azurerm_function_app" "proxy" {
       client_secret = var.google_client_secret
     }
     unauthenticated_client_action = "RedirectToLoginPage"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
+    ]
   }
 }
