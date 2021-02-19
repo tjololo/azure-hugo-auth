@@ -63,13 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: hugo/quickstart
+        working-directory: ./hugo/quickstart
     steps:
       - uses: actions/checkout@v2
       - uses: chabad360/hugo-actions@master
-        working-directory: ./hugo/quickstart
       - uses: bacongobbler/azure-blob-storage-upload@v1.1.1
-        working-directory: ./hugo/quickstart
         with:
           source_dir: 'public'
           container_name: 'content'
