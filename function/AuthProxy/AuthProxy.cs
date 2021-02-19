@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Http;
 using System;
 using System.Net;
@@ -24,7 +25,11 @@ namespace AuthProxy
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(blobStorageURI);
-                var storagePath = "/" + container + "/" + path + authKey;
+                string postfix = "";
+                if (path.EndsWith("/")){
+                    postfix = "index.html";
+                }
+                var storagePath = "/" + container + "/" + path + postfix + authKey;
                 return await client.GetAsync(storagePath);
             }
         }
