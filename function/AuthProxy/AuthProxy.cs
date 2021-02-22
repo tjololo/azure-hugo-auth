@@ -21,8 +21,7 @@ namespace AuthProxy
             if (req.Headers.ContainsKey("X-MS-CLIENT-PRINCIPAL-NAME")) {
                 user = req.Headers["X-MS-CLIENT-PRINCIPAL-NAME"];
             }
-            string[] allowedUsers = System.Environment.GetEnvironmentVariable("ALLOWED_USERS")?.Split(",", StringSplitOptions.RemoveEmptyEntries);
-            if (allowedUsers[0] != "*" && allowedUsers.Length > 0 && Array.IndexOf(allowedUsers, user) == -1)
+            if (userIsUnauthorized(user))
             {
                 return new HttpResponseMessage(HttpStatusCode.Forbidden);
             }
@@ -40,6 +39,16 @@ namespace AuthProxy
                 var storagePath = "/" + container + "/" + path + postfix + authKey;
                 return await client.GetAsync(storagePath);
             }
+        }
+
+        private static bool userIsUnauthorized(string user) {
+            string[] allowedUsers = System.Environment.GetEnvironmentVariable("ALLOWED_USERS")?.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            if (allowedUsers[0] != "*" && allowedUsers.Length > 0 && Array.IndexOf(allowedUsers, user) == -1)
+            {
+                return true;
+            }
+            return false;
+
         }
     }
 }
