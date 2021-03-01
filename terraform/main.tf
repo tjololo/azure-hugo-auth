@@ -36,8 +36,8 @@ data "azurerm_storage_account_blob_container_sas" "content" {
   container_name    = azurerm_storage_container.content.name
   https_only        = true
 
-  start  = "2021-02-20"
-  expiry = "2021-03-01"
+  start  = "2021-03-01"
+  expiry = "2021-04-01"
 
   permissions {
     read   = true
